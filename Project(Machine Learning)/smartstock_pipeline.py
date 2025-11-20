@@ -1,6 +1,3 @@
-# single-cell Jupyter notebook: full SmartStock ML pipeline (train + report + visuals)
-# Heatmap replaced by simple grouped bar chart per store
-
 import sys, subprocess, os, math
 py = sys.executable
 
