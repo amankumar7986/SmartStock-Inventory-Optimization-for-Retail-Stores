@@ -1,44 +1,21 @@
-# SmartStock Inventory Optimization – Machine Learning Pipeline
+# Demand Forecasting Module
 
-SmartStock is an end-to-end inventory optimization system that forecasts sales, analyzes stock levels, and produces automated reports for retail stores.  
-This project uses a LightGBM-based time-series model along with custom feature engineering, stock-estimation logic, and visual analytics.
+This module (`ml_model.py`) contains the `DemandForecaster` class, which is responsible for training a Machine Learning model to forecast sales demand based on historical data. It handles the entire pipeline from data loading to prediction.
 
----
+## Overview
 
-## 🚀 Features
+The system uses a **HistGradientBoostingRegressor** from Scikit-Learn, which is efficient for large datasets and handles tabular data well.
 
-### ✔ Complete ML Pipeline
-- Loads dataset from **Hugging Face**: `t4tiana/store-sales-time-series-forecasting`
-- Automatic:
-  - Data preprocessing  
-  - Feature engineering (lag, rolling, time features)  
-  - Train / Validation / Test split  
-  - Model training with LightGBM + early stopping  
-  - Model saving (`.pkl`)  
+**Key Features:**
+- **Automated Data Loading:** Fetches sales records directly from the SQL database.
+- **Feature Engineering:** Automatically extracts temporal features (Year, Month, Day, Day of Week) from dates.
+- **Preprocessing:** Handles categorical variables (`family`, `store_nbr`) using OneHotEncoding.
+- **Model:** Uses a Histogram-based Gradient Boosting Regression tree.
+- **Metrics:** Calculates MAE, RMSE, and R2 Score after training.
 
-### ✔ Inventory Forecasting & Health Classification
-For every (store, product):
-- Forecasts upcoming sales
-- Computes 14-day average usage
-- Estimates recommended stock level
-- Labels stock health:
-  - 🔴 UNDERSTOCK (Reorder Needed)
-  - 🟢 OVERSTOCK (Reduce Inventory)
-  - ⚪ BALANCED
+## Prerequisites
 
-### ✔ Automated Outputs (Generated)
-- `models/lightgbm_store_sales.pkl`
-- `reports/stock_report.csv`
-- Visuals under `outputs/`:
-  - `val_metric.png`
-  - `test_pred_vs_true.png`
-  - `category_stock_status.png`
-  - `store_category_summary.png` (grouped bar chart)
+Make sure you have the following Python libraries installed. You can install them via pip:
 
-### ✔ Optional Interactive Plots (Plotly)
-- Interactive prediction charts  
-- Interactive store-level grouped bar chart  
-
----
-
-
+```bash
+pip install pandas numpy scikit-learn sqlalchemy python-dateutil
